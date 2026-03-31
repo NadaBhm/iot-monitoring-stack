@@ -1,0 +1,186 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "2f3c249cdaf34088",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "influxdb",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "8c8260969d482c52",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "30",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 330,
+        "y": 400,
+        "wires": [
+            [
+                "da469e3f9e6ee994"
+            ]
+        ]
+    },
+    {
+        "id": "da469e3f9e6ee994",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://api:5000",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 610,
+        "y": 400,
+        "wires": [
+            [
+                "5141efc5d15f0661",
+                "4a2d5f4761ab9320",
+                "e89cc9cb2a25eaf1"
+            ]
+        ]
+    },
+    {
+        "id": "5141efc5d15f0661",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 930,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "4a2d5f4761ab9320",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 1",
+        "func": "msg.payload = [\n    [{\n        temp: msg.payload.data.temp,\n    \n    },\n    {\n        device: msg.payload.data.device,\n        container: msg.payload.data.name\n    \n    }],\n];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 520,
+        "wires": [
+            [
+                "5141efc5d15f0661",
+                "f4a85647461412d9"
+            ]
+        ]
+    },
+    {
+        "id": "f4a85647461412d9",
+        "type": "influxdb out",
+        "z": "f6f2187d.f17ca8",
+        "influxdb": "2f3c249cdaf34088",
+        "name": "influxdb",
+        "measurement": "data",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "mtc",
+        "bucket": "mtcbucket",
+        "x": 980,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "e89cc9cb2a25eaf1",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 2",
+        "func": "msg.payload =[\n{\n    \"device\": msg.payload.data.device,\n    \"container\": msg.payload.data.container,\n    \"temperature\": msg.payload.data.temp\n}\n];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 300,
+        "wires": [
+            [
+                "38e6ec03dc5ef703",
+                "5141efc5d15f0661"
+            ]
+        ]
+    },
+    {
+        "id": "38e6ec03dc5ef703",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://postgrest:3000\\temperature_data",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 990,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "272486d01e686d4e",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-influxdb": "0.7.0"
+        }
+    }
+]
