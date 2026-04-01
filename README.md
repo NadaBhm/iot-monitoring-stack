@@ -1,4 +1,4 @@
-# 🛰️ IoT Monitoring Stack
+#  IoT Monitoring Stack
 
 A production-grade IoT data pipeline built with Docker Compose, developed while completing the **"More than Certified in Docker"** course — a hands-on program that goes well beyond standard Docker certification content.
 
@@ -6,7 +6,7 @@ Sensor data flows from Node-RED through InfluxDB and PostgreSQL, visualized live
 
 ---
 
-## 📐 Architecture
+##  Architecture
 ```
 Sensor Data
     │
@@ -29,7 +29,7 @@ Grafana Dashboard          PostgREST (auto REST API)
 ### Node-RED Flow
 ![Node-RED Flow](screenshots/nodered-flow.png)
 
-## 🧰 Tech Stack
+##  Tech Stack
 
 | Service        | Role                                      |
 |----------------|-------------------------------------------|
@@ -42,7 +42,7 @@ Grafana Dashboard          PostgREST (auto REST API)
 
 ---
 
-## 🔐 Administration, Security & Maintenance
+##  Administration, Security & Maintenance
 
 This project covers production-level Docker security practices taught in the course:
 
@@ -86,7 +86,7 @@ docker-compose up --build
 
 ---
 
-## 🔒 Environment Variables
+##  Environment Variables
 
 Copy `.env.example` to `.env` and fill in your values. **Never commit `.env`.**
 ```env
@@ -115,7 +115,7 @@ Two panels are configured out of the box:
 
 ---
 
-## 🗂️ Project Structure
+##  Project Structure
 ```
 .
 ├── docker-compose.yml     # Full stack definition (all secrets via .env)
@@ -126,12 +126,12 @@ Two panels are configured out of the box:
 
 ---
 
-## 📚 Course
+##  Course
 
 Built as part of [**More than Certified in Docker**](https://morethancertified.com) — a project-driven Docker course covering real-world container orchestration, networking, security, and monitoring beyond what standard certifications teach.
 
 ---
 
-## 👤 Author
+##  Author
 
 **Nada Bhm** — [github.com/NadaBhm](https://github.com/NadaBhm)
